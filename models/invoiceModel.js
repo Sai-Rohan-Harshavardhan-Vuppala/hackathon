@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 const invoiceSchema = new mongoose.Schema({
-  Items: {
+  Items: [{
     name: {
       type: String,
     },
@@ -12,7 +12,7 @@ const invoiceSchema = new mongoose.Schema({
     category: {
       type: String,
     }
-  },
+  }],
   date: {
     type: Date,
     required: true,

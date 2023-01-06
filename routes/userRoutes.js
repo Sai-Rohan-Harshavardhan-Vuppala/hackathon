@@ -8,7 +8,7 @@ Router.use(authController.verifyJwtToken);
 
 Router.get("/:id", userController.getUser);
 
-Router.use(authController.protect);
+Router.use(authController.loggedInUser);
 
 Router.patch(
   "/:id",
