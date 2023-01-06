@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import { gapi } from "gapi-script";
 
-const Login = ({ sucessLogin }) => {
+const Login = ({ successLogin }) => {
   const clientId =
     "660688639013-hg6mvgnt7ia3fhhmo3gipjsjch13g2ed.apps.googleusercontent.com";
 
@@ -15,14 +15,15 @@ const Login = ({ sucessLogin }) => {
     // console.log(response);
     axios
       .post(
-        "/api/v1/auth/login",
+        "/api/auth/login",
         { tokenId: response.tokenId },
         {
           withCredentials: true,
         }
       )
       .then((response) => {
-        sucessLogin(response);
+        console.log(response);
+        successLogin(response);
       })
       .catch((err) => {
         console.log(err);

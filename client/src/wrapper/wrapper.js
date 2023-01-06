@@ -6,6 +6,7 @@ const Wrapper = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [cookies, setCookie] = useCookies();
+  const [user, setUser] = useState();
 
   const checkIsLoggedIn = () => {
     if (cookies.isLoggedIn == null || !cookies.isLoggedIn) {
@@ -17,8 +18,10 @@ const Wrapper = () => {
     setIsLoading(false);
   };
 
-  const successLogin = () => {
+  const successLogin = (response) => {
     setCookie("isLoggedIn", true, { path: "/" });
+    setUser(response.data.user);
+    setIsLoggedIn(true);
   };
   useEffect(() => {
     checkIsLoggedIn();
@@ -31,7 +34,8 @@ const Wrapper = () => {
           {!isLoggedIn ? (
             <Home successLogin={successLogin} />
           ) : (
-            <div>login</div>
+            // Routes
+            <div>Home page</div>
           )}
         </div>
       ) : (
