@@ -121,7 +121,7 @@ const googleLogin = catchAsync(async (req, res, next) => {
                 createSendToken(user, 200, res);
               } else {
                 const newUser = await User.create({
-                  name: name,
+                  username: name,
                   email: email,
                   image: picture,
                 });
@@ -157,6 +157,15 @@ const loginStatus = (req, res, next) => {
   });
 };
 
+const protect = catchAsync(async (req, res, next) => {
+  let user = await User.findOne({ email: req.user.email });
+
+  if (!user) return next(new AppError("User not found", 404));
+  req.user = user;
+
+  next();
+});
+
 module.exports = {
   createToken,
   createSendToken,
@@ -166,4 +175,5 @@ module.exports = {
   googleLogin,
   logout,
   loginStatus,
+  protect,
 };
