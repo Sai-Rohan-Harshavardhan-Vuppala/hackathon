@@ -10,6 +10,8 @@ const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 
 // Import necessary routers
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
@@ -28,6 +30,8 @@ app.use(middleware.requestLogger);
 
 // Here write all api endpoints
 // ex  app.use('/api/v1/user', userRouter)
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
 // For production
 // app.get("*", (req, res, next) => {
