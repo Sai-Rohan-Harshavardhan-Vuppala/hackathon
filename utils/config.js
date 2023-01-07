@@ -11,13 +11,18 @@ let JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 let MONGODB_URI = process.env.MONGODB_URI;
 let JWT_COOKIE_EXPIRES_IN = process.env.JWT_COOKIE_EXPIRES_IN;
 let CLIENT_ID = process.env.CLIENT_ID;
-
+let CLOUD_NAME = process.env.CLOUD_NAME;
+let CLOUD_API_KEY = process.env.CLOUD_API_KEY;
+let CLOUD_API_SECRET = process.env.CLOUD_API_SECRET;
 module.exports = {
   PORT,
   MONGODB_URI,
   NODE_ENV,
   JWT_SECRET,
   JWT_EXPIRES_IN,
+  CLOUD_NAME,
+  CLOUD_API_KEY,
+  CLOUD_API_SECRET,
   // EMAIL_USERNAME,
   // EMAIL_PASSWORD,
   // EMAIL_HOST,

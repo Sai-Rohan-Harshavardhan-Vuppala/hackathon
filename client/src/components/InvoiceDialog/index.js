@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -6,9 +6,19 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Box, MenuItem, Grid, IconButton, Divider } from "@mui/material";
+import {
+  Box,
+  MenuItem,
+  Grid,
+  IconButton,
+  Divider,
+  Typography,
+} from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { CircularProgress } from "@mui/material";
+import axios from "axios";
+
 const categories = [
   "Food",
   "Electronics",
@@ -19,15 +29,13 @@ const categories = [
 ];
 
 export default function FormDialog({ show, handleClose }) {
-  const [category, setCategory] = React.useState("Food");
+  const [page, setPage] = useState(0);
+  const inputFile = useRef(null);
 
-  const [items, setItems] = useState([
-    {
-      name: "",
-      value: "",
-      category: categories[0],
-    },
-  ]);
+  const [uploading, setUploading] = useState(false);
+  const [invoiceUrl, setUrl] = useState("");
+
+  const [items, setItems] = useState([]);
   const handleChange = (event, index, key) => {
     let oldItems = [...items];
     oldItems[index][key] = event.target.value;
@@ -45,6 +53,13 @@ export default function FormDialog({ show, handleClose }) {
     setItems(oldItems);
   };
 
+  const closeModal = () => {
+    setItems([]);
+    setPage(0);
+    setUrl("");
+    setUploading(false);
+    handleClose();
+  };
   const cancelItem = (index) => {
     let oldItems = [...items];
     if (oldItems.length > index) {
@@ -54,22 +69,78 @@ export default function FormDialog({ show, handleClose }) {
   };
 
   const submitInvoice = () => {
-    const data = items;
+    const data = {
+      items: items,
+      url: invoiceUrl,
+    };
     // axios request
     console.log(data);
-    handleClose();
+
+    axios
+      .post("/api/invoice/create", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    closeModal();
+  };
+
+  const onButtonClick = () => {
+    // `current` points to the mounted file input element
+    inputFile.current.click();
+  };
+
+  const onChangeFile = (event) => {
+    event.preventDefault();
+    var file = event.target.files[0];
+    setUploading(true);
+    setFileToBase(file);
+  };
+
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const image = reader.result;
+      processInvoice(image);
+    };
+  };
+  const processInvoice = (file) => {
+    axios
+      .post("/api/invoice/invoice-file", { file: file })
+      .then((res) => {
+        const data = res.data.items;
+        let values = data.map((item) => {
+          return {
+            name: item.name,
+            value: item.value,
+            category: categories[0],
+          };
+        });
+        setItems(values);
+        setUrl(res.data.url);
+        setUploading(false);
+        setPage(1);
+      })
+      .catch((err) => {
+        setUploading(false);
+        closeModal();
+      });
   };
   return (
     <div>
       <Dialog
         open={show}
-        onClose={handleClose}
+        onClose={closeModal}
         sx={{
           "& .MuiDialog-container": {
             "& .MuiPaper-root": {
               width: "650px",
               paddingBottom: "10px",
-              maxWidth: "700px", // Set your width here
+              maxWidth: "700px",
+              minHeight: "500px", // Set your width here
             },
           },
         }}
@@ -79,112 +150,172 @@ export default function FormDialog({ show, handleClose }) {
         >
           Details
         </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Add new invoice items and their values with corresponding
-            categories.
-          </DialogContentText>
-          {items.map((item, index) => {
-            return (
-              <Grid
+
+        {page === 0 && (
+          <Box
+            style={{
+              border: "1px dashed black",
+              height: "400px",
+              margin: "30px",
+              display: "flex",
+              flexFlow: "column",
+              columnSpacing: "20px",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {!uploading && (
+              <>
+                <Box>
+                  <input
+                    type="file"
+                    id="file"
+                    ref={inputFile}
+                    style={{ display: "none" }}
+                    onChange={onChangeFile}
+                  />
+                  <Button
+                    variant="contained"
+                    style={{
+                      background: "green",
+                      borderRadius: "20px",
+                      color: "white",
+                      textTransform: "none",
+                      margin: "10px",
+                    }}
+                    onClick={onButtonClick}
+                  >
+                    Upload
+                  </Button>
+                </Box>
+                <Box>
+                  <Typography>Please upload an ivoice file.</Typography>
+                </Box>
+              </>
+            )}
+            {uploading && (
+              <Box>
+                <Box style={{ width: "100%", textAlign: "center" }}>
+                  <CircularProgress />
+                </Box>
+                <Typography>Processing the invoice, please wait.</Typography>
+              </Box>
+            )}
+          </Box>
+        )}
+        {page === 1 && (
+          <>
+            <DialogContent>
+              <DialogContentText>
+                Add new invoice items and their values with corresponding
+                categories.
+              </DialogContentText>
+              {items.map((item, index) => {
+                return (
+                  <Grid
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Grid
+                      container
+                      style={{ marginTop: "20px" }}
+                      columnSpacing={3}
+                      rowSpacing={1}
+                    >
+                      <Grid item xs={4}>
+                        <TextField
+                          id="outlined-basic"
+                          label="Name"
+                          variant="outlined"
+                          size="small"
+                          sx={{ fontSize: "5px" }}
+                          value={item.name}
+                          onChange={(event) =>
+                            handleChange(event, index, "name")
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <TextField
+                          id="outlined-basic"
+                          label="Amount"
+                          variant="outlined"
+                          size="small"
+                          value={item.value}
+                          onChange={(event) =>
+                            handleChange(event, index, "value")
+                          }
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <TextField
+                          id="outlined-select-currency"
+                          select
+                          label="Category"
+                          value={item.category}
+                          onChange={(event) =>
+                            handleChange(event, index, "category")
+                          }
+                          size="small"
+                          style={{ width: "100%" }}
+                        >
+                          {categories.map((category, index) => (
+                            <MenuItem key={index} value={category}>
+                              {category}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                    </Grid>
+                    <Box>
+                      <CancelIcon
+                        style={{
+                          color: "gray",
+                          marginTop: "28px",
+                          marginLeft: "15px",
+                          cursor: "pointer",
+                          fontSize: "18px",
+                        }}
+                        onClick={() => cancelItem(index)}
+                      />
+                    </Box>
+                  </Grid>
+                );
+              })}
+              <Box style={{ marginTop: "20px" }}>
+                <Button
+                  variant="contained"
+                  startIcon={<AddCircleIcon />}
+                  style={{
+                    borderRadius: "20px",
+                    background: "#2BC48A",
+                    textTransform: "none",
+                    fontSize: "12px",
+                  }}
+                  onClick={addNewItem}
+                >
+                  Add item
+                </Button>
+              </Box>
+            </DialogContent>
+            <DialogActions style={{ alignSelf: "center" }}>
+              <Button
+                onClick={submitInvoice}
+                variant="contained"
                 style={{
-                  display: "flex",
-                  alignItems: "center",
+                  borderRadius: "20px",
+                  background: "#6765DE",
+                  textTransform: "none",
+                  width: "150px",
                 }}
               >
-                <Grid
-                  container
-                  style={{ marginTop: "20px" }}
-                  columnSpacing={3}
-                  rowSpacing={1}
-                >
-                  <Grid item xs={4}>
-                    <TextField
-                      id="outlined-basic"
-                      label="Name"
-                      variant="outlined"
-                      size="small"
-                      sx={{ fontSize: "5px" }}
-                      value={item.name}
-                      onChange={(event) => handleChange(event, index, "name")}
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <TextField
-                      id="outlined-basic"
-                      label="Amount"
-                      variant="outlined"
-                      size="small"
-                      value={item.value}
-                      onChange={(event) => handleChange(event, index, "value")}
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <TextField
-                      id="outlined-select-currency"
-                      select
-                      label="Category"
-                      value={item.category}
-                      onChange={(event) =>
-                        handleChange(event, index, "category")
-                      }
-                      size="small"
-                      style={{ width: "100%" }}
-                    >
-                      {categories.map((category, index) => (
-                        <MenuItem key={index} value={category}>
-                          {category}
-                        </MenuItem>
-                      ))}
-                    </TextField>
-                  </Grid>
-                </Grid>
-                <Box>
-                  <CancelIcon
-                    style={{
-                      color: "gray",
-                      marginTop: "28px",
-                      marginLeft: "15px",
-                      cursor: "pointer",
-                      fontSize: "18px",
-                    }}
-                    onClick={() => cancelItem(index)}
-                  />
-                </Box>
-              </Grid>
-            );
-          })}
-          <Box style={{ marginTop: "20px" }}>
-            <Button
-              variant="contained"
-              startIcon={<AddCircleIcon />}
-              style={{
-                borderRadius: "20px",
-                background: "#2BC48A",
-                textTransform: "none",
-                fontSize: "12px",
-              }}
-              onClick={addNewItem}
-            >
-              Add item
-            </Button>
-          </Box>
-        </DialogContent>
-        <DialogActions style={{ alignSelf: "center" }}>
-          <Button
-            onClick={handleClose}
-            variant="contained"
-            style={{
-              borderRadius: "20px",
-              background: "#6765DE",
-              textTransform: "none",
-              width: "150px",
-            }}
-            onClick={submitInvoice}
-          >
-            Submit
-          </Button>
-        </DialogActions>
+                Submit
+              </Button>
+            </DialogActions>
+          </>
+        )}
       </Dialog>
     </div>
   );
