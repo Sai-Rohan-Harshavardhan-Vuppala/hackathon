@@ -77,7 +77,7 @@ exports.getTargets = catchAsync(async (req, res, next) => {
   }
 
   res.status(200).json({
-    data: targetsNew,
+    data: targetsNew.reverse(),
     status: "success",
   });
 });

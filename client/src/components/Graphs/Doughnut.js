@@ -6,10 +6,10 @@ const DoughnutChart = ({ dataA, dataB, bgColor }) => {
   ChartJS.register(ArcElement);
 
   const data = {
-    labels: ["Red", "Blue"],
+    labels: ["Spent", "Remaining"],
     datasets: [
       {
-        label: "# of Votes",
+        label: "Spent",
         data: [dataA, dataB],
         backgroundColor: [bgColor, "rgba(0,0,0, 0.1)"],
         borderColor: [bgColor, "rgba(0,0,0,0.1)"],

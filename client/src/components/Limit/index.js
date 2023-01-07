@@ -58,7 +58,10 @@ const Limit = () => {
 
     return (
       <Grid item xs={4}>
-        <Paper elevation={5} sx={{ width: "320px", padding: "15px" }}>
+        <Paper
+          elevation={5}
+          sx={{ width: "320px", padding: "15px", marginBottom: "20px" }}
+        >
           <Box>
             <Typography sx={{ fontWeight: "bold", fontSize: "24px" }}>
               {target.name}
