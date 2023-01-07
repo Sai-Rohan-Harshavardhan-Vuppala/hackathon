@@ -99,7 +99,7 @@ const Dashboard = ({user}) => {
 						<BarTypeButton value="weekly" title="Weekly" />
 						<BarTypeButton value="daily" title="Daily" />
 					</Box>
-					<BarGraph invoiceData={user.invoices} />
+					<BarGraph invoiceData={user.invoices} type={barType} />
 				</Paper>
 				<Paper
 					sx={{ marginTop: 4, paddingTop: 1, paddingBottom: 1 }}

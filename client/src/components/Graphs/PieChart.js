@@ -18,8 +18,6 @@ const PieChart = ({invoiceData}) => {
 		return acc;
 	}, {});
 
-	console.log({groupedItems, invoiceData});
-	
 	const data = {
 		labels: Object.keys(groupedItems).map((key) => key),
 		datasets: [
