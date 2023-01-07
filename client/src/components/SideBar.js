@@ -1,9 +1,15 @@
 import React from "react";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
+import { ChevronRight, Dashboard, Receipt, CurrencyRupee } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 import "../Style/sidebar.css";
 
-const SideBarList = ({ bgColor, header, value }) => {
+const listImage = [
+	"https://png.pngtree.com/png-vector/20220611/ourlarge/pngtree-bank-expense-report-icon-png-image_4983446.png",
+	"https://i.pinimg.com/originals/bd/f1/68/bdf16829b78e875422ec5816c704b42d.png",
+]
+
+const SideBarList = ({ bgColor, header, value, imgSrc }) => {
 	return (
 		<Grid container spacing={2} className="sidebar__list">
 			<Grid item>
@@ -14,8 +20,11 @@ const SideBarList = ({ bgColor, header, value }) => {
 						backgroundColor: `${bgColor}`,
 						borderRadius: 2,
 						boxShadow: 6,
+						overflow: "hidden",
 					}}
-				></Box>
+				>
+					<img src={imgSrc} alt="Total Expense" width="100%" />
+				</Box>
 			</Grid>
 			<Grid item className="centerAlign">
 				<Box>
@@ -29,28 +38,32 @@ const SideBarList = ({ bgColor, header, value }) => {
 	);
 };
 
-const SideBar = () => {
+const SideBarMenu = ({ link, title, icon }) => {
 	const navigate = useNavigate();
-
-	const SideBarMenu = () => {
-		return (
-			<Grid
-				container
-				spacing={2}
-				onClick={() => navigate("/")}
-				className="menuItem"
-			>
-				<Grid item>
-					<Box
-						sx={{ width: 30, height: 30, boxShadow: 10, borderWidth: 2 }}
-					></Box>
-				</Grid>
-				<Grid item className="centerAlign" xs={6}>
-					<Typography variant="button">Dashboard</Typography>
-				</Grid>
+	return (
+		<Grid
+			container
+			spacing={3}
+			onClick={() => navigate(link)}
+			className="menuItem"
+			mt={1}
+		>
+			<Grid item>
+				{icon}
 			</Grid>
-		);
-	};
+			<Grid item xs={9}>
+				<Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+					<Typography variant="button" sx={{ fontWeight: "bold" }}>
+						{title}
+					</Typography>
+					<ChevronRight />
+				</Box>
+			</Grid>
+		</Grid>
+	);
+};
+
+const SideBar = () => {
 	return (
 		<div className="sidebar">
 			<Box>
@@ -58,8 +71,8 @@ const SideBar = () => {
 					<Grid item>
 						<img
 							src="https://cdn3d.iconscout.com/3d/premium/thumb/expenses-calculation-6482746-5373624.png"
-							width={70}
-							height={70}
+							width={80}
+							height={80}
 							alt="Icon"
 							className="sidebar_icon"
 						/>
@@ -71,10 +84,12 @@ const SideBar = () => {
 					</Grid>
 				</Grid>
 			</Box>
-			<SideBarList bgColor="lightblue" header="TOTAL EXPENSE" value="10,000" />
-			<SideBarList bgColor="red" header="MONTHLY ALLOWANCE" value="15,000" />
-			<Box mt={4} px={3}>
-				<SideBarMenu />
+			<SideBarList bgColor="lightblue" header="TOTAL EXPENSE" value="10,000" imgSrc={listImage[0]} />
+			<SideBarList bgColor="lightblue" header="MONTHLY ALLOWANCE" value="15,000" imgSrc={listImage[1]} />
+			<Box mt={4} pl={3}>
+				<SideBarMenu link="/" title="Dashboard" icon={<Dashboard className="menuIcon" />} />
+				<SideBarMenu link="/transactions" title="All Transactions" icon={<Receipt className="menuIcon" />} />
+				<SideBarMenu link="/expense/new" title="Set Limit" icon={<CurrencyRupee className="menuIcon" />} />
 			</Box>
 		</div>
 	);
