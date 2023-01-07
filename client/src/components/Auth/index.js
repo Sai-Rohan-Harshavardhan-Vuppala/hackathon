@@ -26,7 +26,7 @@ const Home = ({ successLogin }) => {
           </Typography>
         </div>
       </div>
-      <div class="anime-cash">
+      <div class="anime-cash" >
         <Lottie options={defaultOptions} height="80vh" />
       </div>
       <div class="login-btn">
