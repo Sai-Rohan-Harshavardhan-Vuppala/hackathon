@@ -13,7 +13,7 @@ const doughColor = {
 
 const InfoCards = ({ title, value, dataA = 0, dataB = 0 }) => {
 	return (
-		<Paper elevation={5} sx={{ alignItems: "center", display: "flex" }}>
+		<Paper elevation={5} sx={{ alignItems: "center", display: "flex" }} className="infoCards">
 			<Card
 				variant="outlined"
 				sx={{

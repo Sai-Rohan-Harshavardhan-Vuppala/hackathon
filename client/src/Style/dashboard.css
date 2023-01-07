@@ -14,14 +14,8 @@
 .barButtonSelected{
 	border-bottom: 2px solid rgb(0, 93, 222) !important;
 	transition: all 0.2s ease-in-out;
-	animation: slideInFromLeft 0.2s ease-in-out;
 }
-/* animation */
-@keyframes slideInFromLeft {
-	0% {
-		transform: scale(0.8);
-	}
-	100% {
-		transform: scale(1);
-	}
+.infoCards:hover{
+	box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.5);
+	transition: all 0.2s ease-in-out;
 }

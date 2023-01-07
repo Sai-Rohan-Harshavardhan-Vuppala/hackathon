@@ -15,15 +15,19 @@ const Home = ({ successLogin }) => {
     },
   };
   return (
-    <div>
+    <div style={{position: "relative"}}>
       <div class="cutout">
         <div class="main-title">
-          <h1>Cashify</h1>
-          <p class="subtitle">Cash management from future.</p>
+          <Typography variant="h1" component="h1">
+            Welcome to Cashify
+          </Typography>
+          <Typography variant="h4" component="h4" sx={{textAlign:"right"}}>
+            A place where you can manage your cash
+          </Typography>
         </div>
-        <div class="anime-cash">
-          <Lottie options={defaultOptions} height={400} width={400} />
-        </div>
+      </div>
+      <div class="anime-cash" >
+        <Lottie options={defaultOptions} height="80vh" />
       </div>
       <div class="login-btn">
         <Login successLogin={successLogin} />
