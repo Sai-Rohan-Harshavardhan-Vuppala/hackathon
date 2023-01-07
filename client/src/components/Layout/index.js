@@ -9,16 +9,18 @@ import TopBar from "./../TopBar";
 import InvoiceDialog from "./../InvoiceDialog";
 import componentStyles from "../../assets/layout";
 import Trans from "../TopBar/Transactions";
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
+import Limit from "./../Limit";
+
 const useStyles = makeStyles(componentStyles);
 
 const Layout = ({ user }) => {
-
-  var data =[ { category: 'Food', date: '1st January 2023', amount: '10$'}, 
-              { category: 'Clothing', date: '6th January 2023', amount: '20$'},
-              { category: 'Electricity', date: '31st December 2022', amount: '8$'},
-              { category: 'Petrol', date: '1st January 2022', amount: '13$'}
-            ];
+  var data = [
+    { category: "Food", date: "1st January 2023", amount: "10$" },
+    { category: "Clothing", date: "6th January 2023", amount: "20$" },
+    { category: "Electricity", date: "31st December 2022", amount: "8$" },
+    { category: "Petrol", date: "1st January 2022", amount: "13$" },
+  ];
 
   const classes = useStyles();
 
@@ -46,6 +48,7 @@ const Layout = ({ user }) => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/transactions" element={<Trans data={data} />} />
+            <Route path="/target" element={<Limit />} />
           </Routes>
         </Box>
       </Box>
@@ -56,7 +59,7 @@ const Layout = ({ user }) => {
 
 // import  Trans from "../Transactions";
 // const Wrapper = () => {
-//   var data =[ { category: 'Food', date: '1st January 2023', amount: '10$'}, 
+//   var data =[ { category: 'Food', date: '1st January 2023', amount: '10$'},
 //               { category: 'Clothing', date: '6th January 2023', amount: '20$'},
 //               { category: 'Electricity', date: '31st December 2022', amount: '8$'},
 //               { category: 'Petrol', date: '1st January 2022', amount: '13$'}
