@@ -10,6 +10,13 @@ body {
   align-items: center;
   justify-content: flex-end;
 }
+.login-btn{
+  position:absolute;
+  top: 80%;
+  left: 80%;
+  height: fit-content;
+  width: fit-content;
+}
 
 
 .cutout {
@@ -20,21 +27,28 @@ body {
   clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
   position: relative;
 }
+
 .main-title{
-  
+  float: right;
+  margin: 3rem;
 }
 h1 {
   color: white;
-  position: absolute;
   top: 5%;
   font-size: 3em;
   left: 5%;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
 }
 .subtitle {
   font-size: 1em;
   color: white;
   text-align: start;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 /* Add some styling to the image */
-anime-cash {}
+.anime-cash {
+  margin: 2rem;
+  float: left;
+}

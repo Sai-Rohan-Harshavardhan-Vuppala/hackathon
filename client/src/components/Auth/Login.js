@@ -87,6 +87,7 @@ const Login = ({ successLogin }) => {
                   />
                 </svg>
               </SvgIcon>
+              <span style={{ marginLeft: 10 }}>Sign in with Google</span>
             </Button>
           );
         }}
@@ -94,7 +95,7 @@ const Login = ({ successLogin }) => {
         onFailure={failureResponseGoogle}
         cookiePolicy={"single_host_origin"}
         padding={100}
-      />
+      /> 
     </div>
   );
 };

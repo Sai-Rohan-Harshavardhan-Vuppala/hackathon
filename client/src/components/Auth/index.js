@@ -1,9 +1,9 @@
 import React from "react";
 import { Typography, Button } from "@mui/material";
 import Login from "./Login";
-import Lottie from 'react-lottie';
-import animationData from '../../Anime/cash.json';
-import "../../Style/home.css"
+import Lottie from "react-lottie";
+import animationData from "../../Anime/cash.json";
+import "../../Style/home.css";
 
 const Home = ({ successLogin }) => {
   const defaultOptions = {
@@ -11,29 +11,24 @@ const Home = ({ successLogin }) => {
     autoplay: true,
     animationData: animationData,
     rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice"
-    }
+      preserveAspectRatio: "xMidYMid slice",
+    },
   };
   return (
     <div>
-<div class="cutout"  >
-        <div class="header">
-    <div class="header-right">
-    <Login successLogin={successLogin} />
+      <div class="cutout">
+        <div class="main-title">
+          <h1>Cashify</h1>
+          <p class="subtitle">Cash management from future.</p>
+        </div>
+        <div class="anime-cash">
+          <Lottie options={defaultOptions} height={400} width={400} />
+        </div>
+      </div>
+      <div class="login-btn">
+        <Login successLogin={successLogin} />
+      </div>
     </div>
-  </div>
-  
-  <div class="main-title" >
-    <h1>Title</h1>
-    <p class='subtitle'>Subtitle</p>
-  </div>
-  <Lottie class='anime-cash' options={defaultOptions}
-              height={400}
-              width={400}/>
-    </div>
-   
-    </div>
-    
   );
 };
 
