@@ -99,14 +99,14 @@ const Dashboard = ({user}) => {
 						<BarTypeButton value="weekly" title="Weekly" />
 						<BarTypeButton value="daily" title="Daily" />
 					</Box>
-					<BarGraph />
+					<BarGraph invoiceData={user.invoices} />
 				</Paper>
 				<Paper
 					sx={{ marginTop: 4, paddingTop: 1, paddingBottom: 1 }}
 					elevation={5}
 					className="centerAlign"
 				>
-					<PieChart />
+					<PieChart invoiceData={user.invoices} />
 				</Paper>
 			</Box>
 		</Box>

@@ -17,7 +17,7 @@ exports.putUserInParams = catchAsync(async (req, res, next) => {
 
 exports.logout = catchAsync(async (req, res, next) => {});
 
-exports.getUser = factory.getOne(User);
+exports.getUser = factory.getOne(User, "invoices");
 
 exports.updateUser = factory.updateOne(User);
 
