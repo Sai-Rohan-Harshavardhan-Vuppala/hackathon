@@ -9,7 +9,11 @@ const middleware = require("./utils/middleware");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 
+const authRouter = require("./routes/authRoutes.js");
 // Import necessary routers
+const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
+const invoiceRoutes = require("./routes/invoiceRoutes");
 
 const app = express();
 
@@ -28,6 +32,9 @@ app.use(middleware.requestLogger);
 
 // Here write all api endpoints
 // ex  app.use('/api/v1/user', userRouter)
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/invoice", invoiceRoutes);
 
 // For production
 // app.get("*", (req, res, next) => {

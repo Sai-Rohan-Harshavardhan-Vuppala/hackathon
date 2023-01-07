@@ -4,6 +4,7 @@
   "description": "MERN boilerplate",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kartikeya",
@@ -26,7 +27,7 @@
     "mongoose": "^5.10.10",
     "node-cron": "^2.0.3",
     "nodemailer": "^6.4.2",
-    "nodemon": "^2.0.7",
+    "nodemon": "^2.0.20",
     "react": "^16.14.0",
     "react-cookie": "^4.1.1",
     "util": "^0.12.3",

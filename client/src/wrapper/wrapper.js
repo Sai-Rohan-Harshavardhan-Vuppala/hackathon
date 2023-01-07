@@ -1,17 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router";
-import  Trans from "../Transactions";
+import { useCookies } from "react-cookie";
+import Home from "../components/Auth";
+import Dashboard from "../components/Dashboard";
+import Layout from "../components/Layout";
+
 const Wrapper = () => {
-  var data =[ { category: 'Food', date: '1st January 2023', amount: '10$'}, 
-              { category: 'Clothing', date: '6th January 2023', amount: '20$'},
-              { category: 'Electricity', date: '31st December 2022', amount: '8$'},
-              { category: 'Petrol', date: '1st January 2022', amount: '13$'}
-            ];
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [cookies, setCookie] = useCookies();
+  const [user, setUser] = useState();
+
+  const checkIsLoggedIn = () => {
+    if (cookies.isLoggedIn == null || !cookies.isLoggedIn) {
+      // sign in
+      setIsLoggedIn(false);
+    } else {
+      console.log(cookies.user);
+      setUser(cookies.user);
+      setIsLoggedIn(true);
+    }
+    setIsLoading(false);
+  };
+
+  const successLogin = (response) => {
+    setCookie("isLoggedIn", true, { path: "/" });
+    setCookie("user", response.data.user, { path: "/" });
+    setUser(response.data.user);
+    console.log(response.data.user);
+    setIsLoggedIn(true);
+  };
+  useEffect(() => {
+    checkIsLoggedIn();
+  }, []);
+
   return (
     <div>
-      <Routes>
-        <Route path="/Transactions" element={<Trans data = {data}/>} />
-      </Routes>
+      {!isLoading ? (
+        <div>
+          {!isLoggedIn ? (
+            <Home successLogin={successLogin} />
+          ) : (
+            <Layout user={user} />
+          )}
+        </div>
+      ) : (
+        <div>Loading</div>
+      )}
     </div>
   );
 };
