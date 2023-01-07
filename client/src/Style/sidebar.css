@@ -23,10 +23,10 @@
   padding-bottom: 0px;
 }
 .sidebar_icon {
-  filter: drop-shadow(0 0 30px black);
+  filter: drop-shadow(0 0 20px rgba(0,0,0,0.7));
 }
 .sidebar_header {
-	text-shadow: 5px 0 15px rgba(0, 0, 0, 1);
+	text-shadow: 0 0 30px rgba(0, 0, 0, 1);
 	font-family: "Inspiration", cursive !important;
 	font-size: 3.5rem !important;
 }

@@ -31,7 +31,7 @@ const SideBarList = ({ bgColor, header, value, imgSrc }) => {
 					<Typography variant="button" sx={{ fontWeight: "bold" }}>
 						{header}
 					</Typography>
-					<Typography variant="subtitle1">$ {value}</Typography>
+					<Typography variant="subtitle1">₹ {value}</Typography>
 				</Box>
 			</Grid>
 		</Grid>
