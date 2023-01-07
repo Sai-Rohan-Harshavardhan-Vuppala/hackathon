@@ -98,11 +98,11 @@ export default function FormDialog({ show, handleClose }) {
   };
 
   const onChangeFile = (event) => {
-    // event.preventDefault();
-    // var file = event.target.files[0];
-    // setUploading(true);
-    // setFileToBase(file);
-    setPage(1);
+    event.preventDefault();
+    var file = event.target.files[0];
+    setUploading(true);
+    setFileToBase(file);
+    // setPage(1);
   };
 
   const setFileToBase = (file) => {
