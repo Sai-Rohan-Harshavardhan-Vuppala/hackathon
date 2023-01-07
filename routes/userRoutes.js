@@ -9,6 +9,7 @@ Router.use(authController.verifyJwtToken);
 Router.get("/:id", userController.getUser);
 
 Router.use(authController.loggedInUser);
+Router.get("/me", userController.getMy);
 
 Router.patch(
   "/:id",

@@ -17,23 +17,17 @@ exports.putUserInParams = catchAsync(async (req, res, next) => {
 
 exports.logout = catchAsync(async (req, res, next) => {});
 
-exports.getMe = catchAsync(async (req, res, next) => {
-  let user = await User.findOne({ email: req.user.email });
-
-  if (!user) {
-    user = await User.create({
-      email: req.user.email,
-      firstname: req.user.given_name,
-      lastname: req.user.family_name,
-      img: req.user.picture,
-    });
-  }
-
-  res.send(user);
-
-  // next();
-});
-
 exports.getUser = factory.getOne(User);
 
 exports.updateUser = factory.updateOne(User);
+
+exports.getMy = catchAsync(async (req, res, next) => {
+  // Todo:test
+  const doc = await User.findById(req.user._id).populate("invoices");
+  res.status(201).json({
+    status: "success",
+    data: {
+      doc,
+    },
+  });
+});

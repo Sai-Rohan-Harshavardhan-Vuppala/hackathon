@@ -1,5 +1,6 @@
 const Invoice = require("../models/invoiceModel");
 const catchAsync = require("./../utils/catchAsync");
+const User = require("../models/userModel");
 const factory = require("./handleFactory");
 const APIFeatures = require("../utils/apiFeatures");
 const cloudinary = require("./cloudinary");
@@ -8,8 +9,24 @@ const Client = require("@veryfi/veryfi-sdk");
 var multer = require("multer");
 const AppError = require("../utils/appError");
 exports.getInvoice = factory.getOne(Invoice);
-exports.createInvoice = factory.createOne(Invoice);
 exports.deleteInvoice = factory.deleteOne(Invoice);
+
+exports.createInvoice = catchAsync(async (req, res, next) => {
+
+    // Todo:test
+    const { items, url } = req.body;
+    const doc = await Invoice.create(req.body);
+
+    // remember to add to user
+    await User.findByIdAndUpdate(req.body.createdBy,{ $push: { invoices: doc._id  }})
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        doc,
+      },
+    });
+});
 
 const client_id = "vrfvrpfoGYLkmnbxnzWh34S3hhDT5EY5odFD3ep";
 const client_secret = "vrfvrpfoGYLkmnbxnzWh34S3hhDT5EY5odFD3ep";
