@@ -58,10 +58,19 @@ exports.getTargets = catchAsync(async (req, res, next) => {
     target = { ...target.toObject(), spent: 0 };
     console.log(target.categories);
     for (let invoice of invoices) {
+      let x = new Date(target.startDate);
+      // console.log(x.toDateString());
+      let y = new Date(target.endDate);
+      // console.log(y.toDateString());
+      let z = new Date(invoice.date);
+      // console.log(z.toDateString());
+      if (invoice.date == null || x > z || z > y) continue;
+
       for (let item of invoice.items) {
-        console.log(item.category);
-        if (target.categories.includes(item.category))
+        if (target.categories.includes(item.category)) {
           target.spent += item.value;
+          break;
+        }
       }
     }
     targetsNew.push(target);

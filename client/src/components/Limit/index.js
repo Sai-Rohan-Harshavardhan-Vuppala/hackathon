@@ -57,70 +57,80 @@ const Limit = () => {
     let balance = 1 - spent;
 
     return (
-      <Paper elevation={5} sx={{ width: "320px", padding: "15px" }}>
-        <Box>
-          <Typography sx={{ fontWeight: "bold", fontSize: "24px" }}>
-            {target.name}
-          </Typography>
-        </Box>
+      <Grid item xs={4}>
+        <Paper elevation={5} sx={{ width: "320px", padding: "15px" }}>
+          <Box>
+            <Typography sx={{ fontWeight: "bold", fontSize: "24px" }}>
+              {target.name}
+            </Typography>
+          </Box>
 
-        <Box
-          sx={{
-            height: "150px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <DoughnutChart
-            dataA={spent}
-            dataB={balance}
-            bgColor="rgb(219, 72, 178)"
-          />
-        </Box>
+          <Box
+            sx={{
+              height: "100px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <DoughnutChart
+              dataA={spent}
+              dataB={balance}
+              bgColor="rgb(219, 72, 178)"
+            />
+          </Box>
 
-        <Grid container sx={{ marginTop: "20px" }}>
-          <Grid item xs={4}>
-            <Stack>
+          <Grid container sx={{ marginTop: "20px" }}>
+            <Grid item xs={4}>
+              <Stack>
+                <Typography sx={{ fontSize: "16px", color: "gray" }}>
+                  Budget
+                </Typography>
+                <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
+                  ₹ {target.amount}
+                </Typography>
+              </Stack>
+            </Grid>
+            <Grid item xs={8}>
               <Typography sx={{ fontSize: "16px", color: "gray" }}>
-                Budget
+                Timeline
               </Typography>
-              <Typography sx={{ fontSize: "20px", fontWeight: "bold" }}>
-                ₹ {target.amount}
+              <Typography sx={{ fontSize: "18px", fontWeight: "bold" }}>
+                {startDate} - {endDate}
               </Typography>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ marginTop: "20px" }}>
+            <Stack spacing={1}>
+              <Typography sx={{ fontSize: "16px", color: "gray" }}>
+                Categories
+              </Typography>
+
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                }}
+              >
+                {target.categories.map((category, index) => {
+                  return (
+                    <Chip
+                      label={category}
+                      key={index}
+                      sx={{
+                        background: "#D8EBFF",
+                        color: "#08284a",
+                        fontSize: "16px",
+                      }}
+                    />
+                  );
+                })}
+              </Stack>
             </Stack>
           </Grid>
-          <Grid item xs={8}>
-            <Typography sx={{ fontSize: "16px", color: "gray" }}>
-              Timeline
-            </Typography>
-            <Typography sx={{ fontSize: "18px", fontWeight: "bold" }}>
-              {startDate} - {endDate}
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container sx={{ marginTop: "20px" }}>
-          <Stack spacing={1}>
-            <Typography sx={{ fontSize: "16px", color: "gray" }}>
-              Categories
-            </Typography>
-            <Stack direction="row" spacing={1}>
-              {target.categories.map((category, index) => {
-                return (
-                  <Chip
-                    label={category}
-                    key={index}
-                    sx={{
-                      background: "#D8EBFF",
-                      color: "#08284a",
-                      fontSize: "16px",
-                    }}
-                  />
-                );
-              })}
-            </Stack>
-          </Stack>
-        </Grid>
-      </Paper>
+        </Paper>
+      </Grid>
     );
   };
 
@@ -139,7 +149,14 @@ const Limit = () => {
       >
         New Target
       </Button>
-      <Grid sx={{ marginTop: "20px" }}>
+      <Grid
+        container
+        sx={{
+          marginTop: "20px",
+          //   display: "flex",
+          //   justifyContent: "space-around",
+        }}
+      >
         {targets &&
           targets.map((target) => {
             return InfoCards(target);

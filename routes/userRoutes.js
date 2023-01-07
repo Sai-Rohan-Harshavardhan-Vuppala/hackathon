@@ -9,7 +9,7 @@ Router.use(authController.loggedInUser);
 
 Router.post("/new-target", userController.addTarget);
 Router.get("/targets", userController.getTargets);
-// Router.get("/:id", userController.getUser);
+Router.get("/:id", userController.getUser);
 
 Router.get("/me", userController.getMy);
 
