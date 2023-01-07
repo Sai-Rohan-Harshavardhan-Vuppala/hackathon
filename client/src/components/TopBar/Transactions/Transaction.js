@@ -27,16 +27,16 @@ const Trans = ({data, key}) => {
       <Card>
         <CardContent>
         <Grid container spacing={0.5}>
-          <Grid item xs={0.5}>
+          <Grid item xs={0.6}>
             <Avatar sx={{ bgcolor: Color }} aria-label="recipe">
               {data.category[0]}
             </Avatar>
           </Grid>
-          <Grid item xs={9.5} >
-            <Grid item xs={9.5}>
+          <Grid item xs={9.4} >
+            <Grid item xs={9.4}>
             <Typography display="flex" alignItems="flex-start">{data.category}</Typography> 
             </Grid>
-            <Grid item xs={9.5}>
+            <Grid item xs={9.4}>
             <Typography  variant="caption" flexDirection='row' gutterBottom>{data.date}</Typography> 
             </Grid>
           </Grid>

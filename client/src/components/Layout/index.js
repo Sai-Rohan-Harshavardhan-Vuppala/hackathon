@@ -9,6 +9,7 @@ import TopBar from "./../TopBar";
 import InvoiceDialog from "./../InvoiceDialog";
 import componentStyles from "../../assets/layout";
 import Trans from "../TopBar/Transactions";
+import Grid from '@mui/material/Grid';
 const useStyles = makeStyles(componentStyles);
 
 const Layout = ({ user }) => {
