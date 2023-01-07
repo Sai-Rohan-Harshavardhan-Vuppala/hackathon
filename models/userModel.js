@@ -37,6 +37,9 @@ const userSchema = new mongoose.Schema(
         amount: {
           type: Number,
         },
+        name: {
+          type: String,
+        },
       },
     ],
   },

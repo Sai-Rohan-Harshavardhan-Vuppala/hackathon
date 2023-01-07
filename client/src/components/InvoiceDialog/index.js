@@ -6,16 +6,15 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import {
-  Box,
-  MenuItem,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, MenuItem, Grid, Typography, FormControl } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { CircularProgress } from "@mui/material";
 import axios from "axios";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import dayjs from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const categories = [
   "Food",
@@ -28,6 +27,8 @@ const categories = [
 
 export default function FormDialog({ show, handleClose }) {
   const [page, setPage] = useState(0);
+  const [date, setDate] = useState(dayjs());
+
   const inputFile = useRef(null);
 
   const [uploading, setUploading] = useState(false);
@@ -66,10 +67,16 @@ export default function FormDialog({ show, handleClose }) {
     }
   };
 
+  const handleDate = (value, setHandler) => {
+    console.log(value);
+    setHandler(value);
+  };
+
   const submitInvoice = () => {
     const data = {
       items: items,
       url: invoiceUrl,
+      date: date,
     };
     // axios request
     console.log(data);
@@ -91,10 +98,11 @@ export default function FormDialog({ show, handleClose }) {
   };
 
   const onChangeFile = (event) => {
-    event.preventDefault();
-    var file = event.target.files[0];
-    setUploading(true);
-    setFileToBase(file);
+    // event.preventDefault();
+    // var file = event.target.files[0];
+    // setUploading(true);
+    // setFileToBase(file);
+    setPage(1);
   };
 
   const setFileToBase = (file) => {
@@ -208,6 +216,7 @@ export default function FormDialog({ show, handleClose }) {
                 Add new invoice items and their values with corresponding
                 categories.
               </DialogContentText>
+
               {items.map((item, index) => {
                 return (
                   <Grid
@@ -282,21 +291,56 @@ export default function FormDialog({ show, handleClose }) {
                   </Grid>
                 );
               })}
-              <Box style={{ marginTop: "20px" }}>
-                <Button
-                  variant="contained"
-                  startIcon={<AddCircleIcon />}
-                  style={{
-                    borderRadius: "20px",
-                    background: "#2BC48A",
-                    textTransform: "none",
-                    fontSize: "12px",
-                  }}
-                  onClick={addNewItem}
-                >
-                  Add item
-                </Button>
-              </Box>
+              <Grid
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Box style={{ marginTop: "20px" }}>
+                  <Button
+                    variant="contained"
+                    startIcon={<AddCircleIcon />}
+                    style={{
+                      borderRadius: "20px",
+                      background: "#2BC48A",
+                      textTransform: "none",
+                      fontSize: "12px",
+                    }}
+                    onClick={addNewItem}
+                  >
+                    Add item
+                  </Button>
+                </Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Grid
+                      columnGap={2}
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        marginTop: "20px",
+                      }}
+                    >
+                      <Grid item xs={6}>
+                        <FormControl sx={{ m: 1, width: "100%" }}>
+                          <DesktopDatePicker
+                            label="Date"
+                            inputFormat="DD/MM/YYYY"
+                            value={date}
+                            onChange={(value) => handleDate(value, setDate)}
+                            size="small"
+                            renderInput={(params) => (
+                              <TextField {...params} size="small" />
+                            )}
+                          />
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  </LocalizationProvider>
+                </Box>
+              </Grid>
             </DialogContent>
             <DialogActions style={{ alignSelf: "center" }}>
               <Button

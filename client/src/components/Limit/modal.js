@@ -37,8 +37,9 @@ export default function FormDialog({ show, handleClose }) {
   const [selectedCategories, setCategories] = useState([]);
   const [startDate, setStartDate] = useState(dayjs());
   const [endDate, setEndDate] = useState(dayjs());
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState();
   const [error, setError] = useState("");
+  const [name, setName] = useState("");
 
   const close = () => {
     handleClose();
@@ -70,6 +71,9 @@ export default function FormDialog({ show, handleClose }) {
     } else if (amount <= 0 || isNaN(amount)) {
       setError("Please keep amount greater than 0");
       return;
+    } else if (name.length === 0) {
+      setError("Please enter name");
+      return;
     }
 
     const data = {
@@ -77,6 +81,7 @@ export default function FormDialog({ show, handleClose }) {
       startDate,
       endDate,
       amount,
+      name,
     };
 
     axios
@@ -97,7 +102,7 @@ export default function FormDialog({ show, handleClose }) {
         sx={{
           "& .MuiDialog-container": {
             "& .MuiPaper-root": {
-              width: "550px",
+              width: "580px",
               paddingBottom: "10px",
               maxWidth: "700px",
               minHeight: "450px", // Set your width here
@@ -192,18 +197,33 @@ export default function FormDialog({ show, handleClose }) {
                   </Grid>
                 </Grid>
               </LocalizationProvider>
-              <Grid item xs={6}>
-                <FormControl sx={{ m: 1, width: "100%", marginTop: "20px" }}>
-                  <TextField
-                    id="outlined-basic"
-                    label="Amount"
-                    variant="outlined"
-                    value={amount}
-                    onChange={(event) =>
-                      handleDate(event.target.value, setAmount)
-                    }
-                  />
-                </FormControl>
+              <Grid container columnSpacing={2}>
+                <Grid item xs={6}>
+                  <FormControl sx={{ m: 1, width: "100%", marginTop: "20px" }}>
+                    <TextField
+                      id="outlined-basic"
+                      label="Amount"
+                      variant="outlined"
+                      value={amount}
+                      onChange={(event) =>
+                        handleDate(event.target.value, setAmount)
+                      }
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <FormControl sx={{ m: 1, width: "100%", marginTop: "20px" }}>
+                    <TextField
+                      id="outlined-basic"
+                      label="Name"
+                      variant="outlined"
+                      value={name}
+                      onChange={(event) =>
+                        handleDate(event.target.value, setName)
+                      }
+                    />
+                  </FormControl>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
