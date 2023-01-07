@@ -45,7 +45,7 @@ const Layout = ({ user }) => {
         />
         <Box style={{ marginTop: "30px", padding: "20px" }}>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard user={user} />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/transactions" element={<Trans data={data} />} />
             <Route path="/target" element={<Limit />} />

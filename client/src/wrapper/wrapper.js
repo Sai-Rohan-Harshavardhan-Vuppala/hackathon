@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router";
 import { useCookies } from "react-cookie";
 import Home from "../components/Auth";
-import Dashboard from "../components/Dashboard";
 import Layout from "../components/Layout";
 
 const Wrapper = () => {
@@ -32,6 +30,7 @@ const Wrapper = () => {
   };
   useEffect(() => {
     checkIsLoggedIn();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

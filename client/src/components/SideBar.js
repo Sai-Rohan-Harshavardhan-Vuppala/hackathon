@@ -15,32 +15,32 @@ const listImage = [
 ];
 
 const SideBarList = ({ bgColor, header, value, imgSrc }) => {
-  return (
-    <Grid container spacing={2} className="sidebar__list">
-      <Grid item>
-        <Box
-          sx={{
-            width: 60,
-            height: 60,
-            backgroundColor: `${bgColor}`,
-            borderRadius: 2,
-            boxShadow: 6,
-            overflow: "hidden",
-          }}
-        >
-          <img src={imgSrc} alt="Total Expense" width="100%" />
-        </Box>
-      </Grid>
-      <Grid item className="centerAlign">
-        <Box>
-          <Typography variant="button" sx={{ fontWeight: "bold" }}>
-            {header}
-          </Typography>
-          <Typography variant="subtitle1">$ {value}</Typography>
-        </Box>
-      </Grid>
-    </Grid>
-  );
+	return (
+		<Grid container spacing={2} className="sidebar__list">
+			<Grid item>
+				<Box
+					sx={{
+						width: 60,
+						height: 60,
+						backgroundColor: `${bgColor}`,
+						borderRadius: 2,
+						boxShadow: 6,
+						overflow: "hidden",
+					}}
+				>
+					<img src={imgSrc} alt="Total Expense" width="100%" />
+				</Box>
+			</Grid>
+			<Grid item className="centerAlign">
+				<Box>
+					<Typography variant="button" sx={{ fontWeight: "bold" }}>
+						{header}
+					</Typography>
+					<Typography variant="subtitle1">₹ {value}</Typography>
+				</Box>
+			</Grid>
+		</Grid>
+	);
 };
 
 const SideBarMenu = ({ link, title, icon }) => {
