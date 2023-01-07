@@ -15,18 +15,25 @@ const Home = ({ successLogin }) => {
     }
   };
   return (
-    <div    >
+    <div>
+<div class="cutout"  >
         <div class="header">
     <div class="header-right">
     <Login successLogin={successLogin} />
     </div>
   </div>
-  <div class="content">
-  <Lottie options={defaultOptions}
-              height={600}
-              width={600}/>
+  
+  <div class="main-title" >
+    <h1>Title</h1>
+    <p class='subtitle'>Subtitle</p>
   </div>
+  <Lottie class='anime-cash' options={defaultOptions}
+              height={400}
+              width={400}/>
     </div>
+   
+    </div>
+    
   );
 };
 

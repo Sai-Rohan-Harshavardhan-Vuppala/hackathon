@@ -1,39 +1,40 @@
 /* Add a background color and some padding to the body */
 body {
-    background-color: lightgray;
-    padding: 20px;
-  }
+  background-color: lightgray;
+  padding: 20px;
+}
+
+/* Style the header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+
+.cutout {
+  width: 100%;
+  height: 40em;
+  background: rgb(63, 94, 251);
+  background: linear-gradient(41deg, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+  position: relative;
+}
+.main-title{
   
-  /* Style the header */
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-  
-  /* Style the login button */
-  button {
-    background-color: white;
-    border: none;
-    color: black;
-    padding: 12px 30px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
-  
-  /* Style the heading */
-  h1 {
-    color: blue;
-    font-size: 36px;
-  }
-  
-  /* Add some styling to the image */
-  img {
-    height: 300px;
-    width: auto;
-  }
-  
+}
+h1 {
+  color: white;
+  position: absolute;
+  top: 5%;
+  font-size: 3em;
+  left: 5%;
+}
+.subtitle {
+  font-size: 1em;
+  color: white;
+  text-align: start;
+}
+
+/* Add some styling to the image */
+anime-cash {}
