@@ -110,7 +110,7 @@ const googleLogin = catchAsync(async (req, res, next) => {
 
       if (email_verified) {
         try {
-          User.findOne({ email }).populate("invoices").exec(async (err, user) => {
+          User.findOne({ email }).exec(async (err, user) => {
             if (err) {
               return res.status(404).json({
                 message: err.message,
