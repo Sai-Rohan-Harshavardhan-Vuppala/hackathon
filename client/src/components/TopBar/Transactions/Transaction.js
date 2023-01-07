@@ -17,14 +17,19 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
   
 const Trans = ({data, key}) => {
+    let hexCode = "0123456789ABCDEF";
+    let Color = "#";
+    for (let i = 0; i < 6; i++){
+        Color += hexCode[Math.floor(Math.random() * 16)];
+    }
     console.log(data);
     return (
       <Card>
         <CardContent>
         <Grid container spacing={0.5}>
           <Grid item xs={0.5}>
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              R
+            <Avatar sx={{ bgcolor: Color }} aria-label="recipe">
+              {data.category[0]}
             </Avatar>
           </Grid>
           <Grid item xs={9.5} >

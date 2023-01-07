@@ -8,9 +8,17 @@ import Profile from "../Profile";
 import TopBar from "./../TopBar";
 import InvoiceDialog from "./../InvoiceDialog";
 import componentStyles from "../../assets/layout";
+import Trans from "../TopBar/Transactions";
 const useStyles = makeStyles(componentStyles);
 
 const Layout = ({ user }) => {
+
+  var data =[ { category: 'Food', date: '1st January 2023', amount: '10$'}, 
+              { category: 'Clothing', date: '6th January 2023', amount: '20$'},
+              { category: 'Electricity', date: '31st December 2022', amount: '8$'},
+              { category: 'Petrol', date: '1st January 2022', amount: '13$'}
+            ];
+
   const classes = useStyles();
 
   const [show, setShow] = useState(false);
@@ -36,6 +44,7 @@ const Layout = ({ user }) => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/transactions" element={<Trans data={data} />} />
           </Routes>
         </Box>
       </Box>
