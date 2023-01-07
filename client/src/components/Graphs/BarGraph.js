@@ -70,8 +70,8 @@ const BarGraph = () => {
 				backgroundColor: "rgba(255, 99, 132, 0.6)",
 				borderColor: "rgba(255, 99, 132, 1)",
 				borderWidth: 1,
-				barThickness: 25,
-				borderRadius: 5,
+				barThickness: 40,
+				borderRadius: 3,
 			},
 		],
 	};
