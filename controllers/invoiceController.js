@@ -1,5 +1,4 @@
 const Invoice = require("../models/invoiceModel");
-const User = require("../models/userModel");
 const catchAsync = require("./../utils/catchAsync");
 const User = require("../models/userModel");
 const factory = require("./handleFactory");
