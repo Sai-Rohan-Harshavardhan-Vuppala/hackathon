@@ -51,7 +51,7 @@ const InfoCards = ({ title, value, dataA = 0, dataB = 0 }) => {
 	);
 };
 
-const Dashboard = () => {
+const Dashboard = ({user}) => {
 	const [barType, setBarType] = useState("monthly");
 
 	const handleBarTypeChange = (newBarType) => {
