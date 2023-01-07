@@ -14,9 +14,9 @@ Router.get("/:id", userController.getUser);
 Router.get("/me", userController.getMy);
 
 Router.patch(
-  "/update/:id",
-  // authController.restrictTo("admin"),
-  userController.updateUser
+	"/update/:id",
+	// authController.restrictTo("admin"),
+	userController.updateUser
 );
 
 module.exports = Router;

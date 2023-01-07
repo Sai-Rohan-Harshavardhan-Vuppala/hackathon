@@ -19,7 +19,7 @@ const Home = ({ successLogin }) => {
       <div class="cutout">
         <div class="main-title">
           <Typography variant="h1" component="h1">
-            Welcome to Cashify
+            Welcome to Expendio
           </Typography>
           <Typography variant="h4" component="h4" sx={{textAlign:"right"}}>
             A place where you can manage your cash
