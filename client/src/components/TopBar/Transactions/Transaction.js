@@ -15,6 +15,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { Stack } from "@mui/material";
   
 const Trans = ({data, key}) => {
     let hexCode = "0123456789ABCDEF";
@@ -24,24 +25,22 @@ const Trans = ({data, key}) => {
     }
     console.log(data);
     return (
-      <Card>
+      <Card sx={{width:"60%"}}>
         <CardContent>
-        <Grid container spacing={0.5}>
-          <Grid item xs={0.6}>
-            <Avatar sx={{ bgcolor: Color }} aria-label="recipe">
-              {data.category[0]}
+        <Grid container spacing={0.5} sx={{alignItems:"center"}}>
+          <Grid item  sx={{width:"40px"}}>
+            <Avatar sx={{ bgcolor: Color,fontSize:"18px" }} aria-label="recipe" >
+              {data.item[0]}
             </Avatar>
           </Grid>
-          <Grid item xs={9.4} >
-            <Grid item xs={9.4}>
-            <Typography display="flex" alignItems="flex-start">{data.category}</Typography> 
-            </Grid>
-            <Grid item xs={9.4}>
+          <Grid item xs={8} sx={{marginLeft:"15px"}} >
+            <Stack>
+            <Typography sx={{fontWeight:"bold",fontSize:"18px"}}>{data.item}</Typography> 
             <Typography  variant="caption" flexDirection='row' gutterBottom>{data.date}</Typography> 
-            </Grid>
+            </Stack>
           </Grid>
           <Grid item xs={2} display='flex' flexDirection='row-reverse' alignItems="center">
-            <Typography justifyContent="end" alignItems="center">{data.amount}</Typography>
+            <Typography justifyContent="end" alignItems="center">₹ {data.amount}</Typography>
           </Grid>
         </Grid>
         </CardContent>
