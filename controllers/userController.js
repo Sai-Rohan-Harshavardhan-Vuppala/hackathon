@@ -17,7 +17,7 @@ exports.putUserInParams = catchAsync(async (req, res, next) => {
 
 exports.logout = catchAsync(async (req, res, next) => {});
 
-exports.getUser = factory.getOne(User);
+exports.getUser = factory.getOne(User, "invoices");
 
 exports.updateUser = factory.updateOne(User);
 
@@ -29,5 +29,55 @@ exports.getMy = catchAsync(async (req, res, next) => {
     data: {
       doc,
     },
+  });
+});
+
+exports.addTarget = catchAsync(async (req, res, next) => {
+  const data = req.body;
+  console.log(data);
+  const doc = await User.findByIdAndUpdate(req.user.id, {
+    $push: { targets: data },
+  });
+
+  res.status(200).json({
+    status: "success",
+  });
+});
+
+exports.getTargets = catchAsync(async (req, res, next) => {
+  const data = await User.findById(req.user.id).populate("invoices");
+
+  let targets = data.targets;
+  const invoices = data.invoices;
+
+  if (targets == null) targets = [];
+
+  let targetsNew = [];
+
+  for (let target of targets) {
+    target = { ...target.toObject(), spent: 0 };
+    console.log(target.categories);
+    for (let invoice of invoices) {
+      let x = new Date(target.startDate);
+      // console.log(x.toDateString());
+      let y = new Date(target.endDate);
+      // console.log(y.toDateString());
+      let z = new Date(invoice.date);
+      // console.log(z.toDateString());
+      if (invoice.date == null || x > z || z > y) continue;
+
+      for (let item of invoice.items) {
+        if (target.categories.includes(item.category)) {
+          target.spent += item.value;
+          break;
+        }
+      }
+    }
+    targetsNew.push(target);
+  }
+
+  res.status(200).json({
+    data: targetsNew.reverse(),
+    status: "success",
   });
 });

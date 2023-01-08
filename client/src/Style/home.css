@@ -50,5 +50,7 @@ h1 {
 /* Add some styling to the image */
 .anime-cash {
   margin: 2rem;
-  float: left;
+  position: absolute;
+  top: 30px;
+  left: 30px;
 }
