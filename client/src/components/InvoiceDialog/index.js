@@ -85,6 +85,7 @@ export default function FormDialog({ show, handleClose }) {
       .post("/api/invoice/create", data)
       .then((res) => {
         console.log(res);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
